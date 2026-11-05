@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #08080c;
+            color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image:
+                radial-gradient(circle at top left, #3b1029, transparent 40%),
+                radial-gradient(circle at bottom right, #290d20, transparent 40%);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 35px;
+            background: rgba(20, 18, 24, 0.95);
+            border: 1px solid #ff2d8d;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(255, 45, 141, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .header h1 span {
+            color: #ff2d8d;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            flex: 1;
+            padding: 17px;
+            background: #15151c;
+            border: 2px solid #ff2d8d;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px rgba(255, 45, 141, 0.3);
+        }
+
+        .btn-tambah {
+            padding: 17px 25px;
+            background: linear-gradient(135deg, #ff5ca8, #ff006e);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-tambah:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ff2d8d;
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 20px;
+            background: #21151f;
+            border: 1px solid #632342;
+            border-radius: 15px;
+        }
+
+        .info h3 {
+            font-size: 20px;
+        }
+
+        .total {
+            color: #ff5ca8;
+            border: 1px solid #ff2d8d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        #daftarData {
+            list-style: none;
+        }
+
+        #daftarData li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #19171d, #111116);
+            border: 1px solid #302630;
+            border-left: 5px solid #ff2d8d;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        #daftarData li:hover {
+            border-color: #ff2d8d;
+            transform: translateX(5px);
+            box-shadow: 0 0 12px rgba(255, 45, 141, 0.15);
+        }
+
+        .nomor {
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ff5ca8;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .teks-data {
+            flex: 1;
+            font-size: 17px;
+            overflow-wrap: anywhere;
+        }
+
+        .btn-hapus {
+            padding: 10px 15px;
+            background: transparent;
+            border: 1px solid #ff2d8d;
+            border-radius: 10px;
+            color: #ff5ca8;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-hapus:hover {
+            background: #ff2d8d;
+            color: white;
+            box-shadow: 0 0 10px #ff2d8d;
+        }
+
+        .kosong {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .footer span {
+            color: #ff2d8d;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .btn-tambah {
+                width: 100%;
+            }
+
+            #daftarData li {
+                padding: 12px;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>MY TO-DO <span>LIST</span></h1>
+            <p>Kelola dan catat kegiatanmu dengan mudah</p>
+        </div>
+
+        <div class="input-area">
+
+            <input type="text"
+                   id="inputData"
+                   placeholder="Masukkan kegiatan baru...">
+
+            <button class="btn-tambah" onclick="tambahData()">
+                + Tambah
+            </button>
+
+        </div>
+
+        <div class="info">
+
+            <h3>Daftar Kegiatan</h3>
+
+            <div class="total" id="jumlahData">
+                Total: 0
+            </div>
+
+        </div>
+
+        <ul id="daftarData"></ul>
+
+        <div class="footer">
+            <p>
+                Stay Productive
+                <span>|</span>
+                Keep Learning
+                <span>|</span>
+                Get Things Done
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+
+        // Membuat array untuk menyimpan data
+        let dataMhs = [];
+
+        // Fungsi menambahkan data
+        function tambahData() {
+
+            let input = document.getElementById("inputData");
+
+            let data = input.value.trim();
+
+            if (data === "") {
+                alert("Masukkan kegiatan terlebih dahulu!");
+                return;
+            }
+
+            // Menambahkan data ke array
+            dataMhs.push(data);
+
+            // Menampilkan data
+            tampilkanData();
+
+            // Mengosongkan input
+            input.value = "";
+
+            input.focus();
+        }
+
+        // Fungsi menampilkan data
+        function tampilkanData() {
+
+            let daftar = document.getElementById("daftarData");
+
+            daftar.innerHTML = "";
+
+            // Jika data kosong
+            if (dataMhs.length === 0) {
+
+                daftar.innerHTML =
+                    '<div class="kosong">Belum ada kegiatan</div>';
+
+            }
+
+            // Menampilkan seluruh isi array
+            dataMhs.forEach(function(data, index) {
+
+                let li = document.createElement("li");
+
+                // Membuat nomor urut tanpa titik
+                let nomor = document.createElement("span");
+
+                nomor.className = "nomor";
+
+                nomor.textContent = index + 1;
+
+                // Membuat teks data
+                let teks = document.createElement("span");
+
+                teks.className = "teks-data";
+
+                teks.textContent = data;
+
+                // Membuat tombol hapus
+                let tombolHapus = document.createElement("button");
+
+                tombolHapus.textContent = "Hapus";
+
+                tombolHapus.className = "btn-hapus";
+
+                tombolHapus.onclick = function() {
+
+                    hapusData(index);
+
+                };
+
+                // Memasukkan elemen ke dalam li
+                li.appendChild(nomor);
+
+                li.appendChild(teks);
+
+                li.appendChild(tombolHapus);
+
+                // Memasukkan li ke daftar
+                daftar.appendChild(li);
+
+            });
+
+            // Menampilkan jumlah data
+            document.getElementById("jumlahData").textContent =
+                "Total: " + dataMhs.length;
+
+        }
+
+        // Fungsi menghapus data
+        function hapusData(index) {
+
+            dataMhs.splice(index, 1);
+
+            tampilkanData();
+
+        }
+
+        // Menambahkan data menggunakan tombol Enter
+        document.getElementById("inputData")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    tambahData();
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>
